@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopverse - Checkout</title>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<!-- Header -->
+<header>
+    <h1>Shopverse</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="account.html">Account</a>
+        <a href="login.html">Login/Sign-up</a>
+    </nav>
+</header>
+
+<!-- Checkout Section -->
+<section class="products">
+    <h2>Checkout</h2>
+
+    <div id="checkout-cart">
+        <h3>Your Items</h3>
+        <div id="checkout-items"></div>
+        <p id="checkout-total">Total: $0.00</p>
+    </div>
+
+    <h3>Billing Information</h3>
+    <form id="checkout-form">
+        <label>
+            Full Name:
+            <input type="text" id="name" required>
+        </label>
+        <label>
+            Email:
+            <input type="email" id="email" required>
+        </label>
+        <label>
+            Shipping Address:
+            <textarea id="address" required></textarea>
+        </label>
+        <button type="submit" class="btn">Place Order</button>
+    </form>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Shopverse. All rights reserved.</p>
+</footer>
+
+<script src="js/checkout.js"></script>
+</body>
+</html>
