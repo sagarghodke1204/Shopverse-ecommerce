@@ -70,4 +70,13 @@ public class OrderController {
         return ResponseEntity.ok(updated);
 
     }
+
+    // ✅ NEW: Get orders for a specific user
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Order>> getOrdersForUser(@PathVariable Long userId) {
+        List<Order> orders = orderService.getOrdersByUserId(userId);
+        return ResponseEntity.ok(orders);
+    }
+
+
 }

@@ -4,43 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shopverse - Products</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to external stylesheet - CORRECTED PATH -->
+    <link rel="stylesheet" href="/css/styles.css" />
 </head>
-<body>
+<body class="min-h-screen bg-gray-100 antialiased">
+
 <!-- Header -->
-<header>
-    <h1>Shopverse</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="cart.html">Cart</a>
-        <a href="account.html">Account</a>
-        <a href="login.html">Login/Sign-up</a>
-    </nav>
+<header class="bg-gray-900 text-white py-4 shadow-lg">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
+        <h1 class="text-3xl font-bold text-yellow-400 mb-2 md:mb-0">Shopverse</h1>
+        <nav class="space-x-4">
+            <a href="index.html" class="hover:text-yellow-400 transition duration-200">Home</a>
+            <a href="products.html" class="hover:text-yellow-400 transition duration-200">Products</a>
+            <a href="cart.html" class="hover:text-yellow-400 transition duration-200">Cart</a>
+            <a href="account.html" class="hover:text-yellow-400 transition duration-200">Account</a>
+            <a href="login.html" class="hover:text-yellow-400 transition duration-200">Login/Sign-up</a>
+        </nav>
+    </div>
 </header>
 
-<!-- Product Grid -->
-<section class="products">
-    <h2>All Products</h2>
+<!-- Product Grid Section -->
+<section class="products-section container mx-auto mt-8 p-6 bg-white rounded-xl shadow-2xl">
+    <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">All Products</h2>
 
-    <!-- Optional: Filter -->
-    <div class="filter">
-        <label for="categorySelect">Filter by Category:</label>
-        <select id="categorySelect">
+    <!-- Filter -->
+    <div class="filter-controls flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
+        <label for="categorySelect" class="text-lg font-medium text-gray-700">Filter by Category:</label>
+        <select id="categorySelect" class="block w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-800">
             <option value="">All</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Accessories">Accessories</option>
+            <!-- Category options will be dynamically populated by products.js -->
         </select>
     </div>
 
-    <div id="product-list" class="product-grid"></div>
+    <div id="product-list" class="product-grid">
+        <!-- Products will be dynamically loaded here by products.js -->
+        <p class="text-gray-600 text-center col-span-full py-8">Loading products...</p>
+    </div>
 </section>
 
 <!-- Footer -->
-<footer>
+<footer class="bg-gray-900 text-white py-4 text-center mt-8 shadow-inner">
     <p>&copy; 2025 Shopverse. All rights reserved.</p>
 </footer>
 
-<script src="js/products.js"></script>
+<!-- Link to your external JavaScript file - CORRECTED PATH -->
+<script src="/js/products.js"></script>
 </body>
 </html>

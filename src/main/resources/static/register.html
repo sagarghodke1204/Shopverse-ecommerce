@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shopverse - Register</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
 <header>
@@ -19,7 +19,7 @@
 
 <section class="products">
     <h2>Register</h2>
-    <form id="registerForm">
+    <form id="registerForm" class="styled-form">
         <p><input type="text" id="username" placeholder="Username" required></p>
         <p><input type="email" id="email" placeholder="Email" required></p>
         <p><input type="password" id="password" placeholder="Password" required></p>
@@ -33,28 +33,29 @@
 </footer>
 
 <script>
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const user = {
-        username: document.getElementById('username').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value
-      };
-      fetch('http://localhost:8087/api/users', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-      })
-      .then(response => {
-        if (response.ok) {
-          alert('Registration successful! Please login.');
-          window.location.href = 'login.html';
-        } else {
-          alert('Registration failed. Try again.');
-        }
-      })
-      .catch(() => alert('Error registering user.'));
-    });
-  </script>
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const user = {
+      username: document.getElementById('username').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      password: document.getElementById('password').value.trim()
+    };
+
+    fetch('http://localhost:8087/api/users', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user)
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('Registration successful! Please login.');
+        window.location.href = 'login.html';
+      } else {
+        alert('Registration failed. Try again.');
+      }
+    })
+    .catch(() => alert('Error registering user.'));
+  });
+</script>
 </body>
 </html>

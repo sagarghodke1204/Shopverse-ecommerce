@@ -4,42 +4,55 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shopverse - Product Details</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to external stylesheet -->
+    <link rel="stylesheet" href="/css/styles.css" />
 </head>
-<body>
+<body class="min-h-screen bg-gray-100 antialiased">
+
 <!-- Header -->
-<header>
-    <h1>Shopverse</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="cart.html">Cart</a>
-        <a href="account.html">Account</a>
-        <a href="login.html">Login/Sign-up</a>
-    </nav>
+<header class="bg-gray-900 text-white py-4 shadow-lg">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
+        <h1 class="text-3xl font-bold text-yellow-400 mb-2 md:mb-0">Shopverse</h1>
+        <nav class="space-x-4">
+            <a href="index.html" class="hover:text-yellow-400 transition duration-200">Home</a>
+            <a href="products.html" class="hover:text-yellow-400 transition duration-200">Products</a>
+            <a href="cart.html" class="hover:text-yellow-400 transition duration-200">Cart</a>
+            <a href="account.html" class="hover:text-yellow-400 transition duration-200">Account</a>
+            <a href="login.html" class="hover:text-yellow-400 transition duration-200">Login/Sign-up</a>
+        </nav>
+    </div>
 </header>
 
 <!-- Product Details Section -->
-<section class="products">
-    <h2>Product Details</h2>
-    <div id="product-container" class="product-card">
+<section class="product-details-section container mx-auto mt-8 p-6 bg-white rounded-xl shadow-2xl">
+    <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Product Details</h2>
+    <div id="product-container" class="product-detail-card">
         <!-- Product details injected by JS -->
+        <div class="flex items-center justify-center min-h-[300px] text-indigo-600 text-lg font-semibold">
+            Loading product details...
+        </div>
     </div>
 </section>
 
 <!-- Related Products Section -->
-<section class="products">
-    <h2>Related Products</h2>
+<section class="products container mx-auto mt-8 p-6 bg-white rounded-xl shadow-2xl">
+    <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Related Products</h2>
     <div id="related-list" class="product-grid">
         <!-- Related products injected by JS -->
+        <p class="text-gray-600 text-center col-span-full py-8">Loading related products...</p>
     </div>
 </section>
 
 <!-- Footer -->
-<footer>
+<footer class="bg-gray-900 text-white py-4 text-center mt-8 shadow-inner">
     <p>&copy; 2025 Shopverse. All rights reserved.</p>
 </footer>
 
-<script src="js/product-details.js"></script>
+<!-- Link to your external JavaScript file -->
+<script src="/js/product-details.js"></script>
 </body>
 </html>

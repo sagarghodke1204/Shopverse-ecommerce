@@ -20,6 +20,10 @@ public class OrderItem {
     @JsonBackReference
     private Order order;
 
+    private String productName;
+    private String imageUrl;
+
+
 
     private int quantity;
     private double price;

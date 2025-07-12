@@ -30,19 +30,10 @@
     </div>
 
     <h3>Billing Information</h3>
-    <form id="checkout-form">
-        <label>
-            Full Name:
-            <input type="text" id="name" required>
-        </label>
-        <label>
-            Email:
-            <input type="email" id="email" required>
-        </label>
-        <label>
-            Shipping Address:
-            <textarea id="address" required></textarea>
-        </label>
+    <form id="checkout-form" class="styled-form">
+        <p><input type="text" id="name" placeholder="Full Name" required></p>
+        <p><input type="email" id="email" placeholder="Email" required></p>
+        <p><textarea id="address" placeholder="Shipping Address" required></textarea></p>
         <button type="submit" class="btn">Place Order</button>
     </form>
 </section>
@@ -52,6 +43,6 @@
     <p>&copy; 2025 Shopverse. All rights reserved.</p>
 </footer>
 
-<script src="js/checkout.js"></script>
+<script src="/js/checkout.js"></script>
 </body>
 </html>
