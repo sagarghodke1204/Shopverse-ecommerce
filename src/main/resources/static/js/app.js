@@ -2,6 +2,31 @@ document.addEventListener('DOMContentLoaded', () => {
   loadProducts();
 });
 
+// Function to map product names to local image paths
+function getProductImagePath(productName) {
+  // Normalize product name for consistent file naming
+  const normalizedName = productName.toLowerCase().replace(/\s/g, '-');
+
+  // Define a mapping for products that should use local images
+  const localImageMap = {
+    'gaming-mouse': '/images/gaming-mouse.png',
+    'backpack': '/images/backpack.png',
+    'smartwatch': '/images/smartwatch.png',
+    'bluetooth-speaker': '/images/bluetooth-speaker.png',
+    'coffee-maker': '/images/coffee-maker.png',
+    'office-chair': '/images/office-chair.png' // Added this mapping
+    // Add more mappings here if you add more local images
+  };
+
+  // Check if the product name exists in our local image map
+  if (localImageMap[normalizedName]) {
+    return localImageMap[normalizedName];
+  }
+  // If not found in local map, return null or original imageUrl
+  return null;
+}
+
+
 function loadProducts() {
   const container = document.getElementById('product-list');
   container.innerHTML = '<p class="text-gray-600 text-center col-span-full py-8">Loading featured products...</p>'; // Show loading message
@@ -22,10 +47,14 @@ function loadProducts() {
       }
 
       products.forEach(product => {
+        // Determine the image URL: check for local image first, then fall back to API's imageUrl
+        const localImagePath = getProductImagePath(product.name);
+        const imageUrlToUse = localImagePath || product.imageUrl;
+
         const card = document.createElement('div');
         card.className = 'product-card'; // This class is styled in styles.css
         card.innerHTML = `
-          <img src="${product.imageUrl}" alt="${product.name}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/CCCCCC/000000?text=No+Image';" />
+          <img src="${imageUrlToUse}" alt="${product.name}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/CCCCCC/000000?text=No+Image';">
           <h3 class="text-xl font-semibold text-gray-900">${product.name}</h3>
           <p class="text-gray-700 text-sm mb-2">${product.description}</p>
           <p class="text-lg font-bold text-indigo-600">Price: ₹${product.price.toFixed(2)}</p>

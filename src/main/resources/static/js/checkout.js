@@ -83,7 +83,6 @@ async function placeOrder() {
   const fullName = document.getElementById('fullName').value.trim();
   const email = document.getElementById('email').value.trim();
   const address = document.getElementById('address').value.trim();
-  // Removed cardDetails variable
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const userId = localStorage.getItem('userId');
 
@@ -94,7 +93,6 @@ async function placeOrder() {
     return;
   }
 
-  // Removed cardDetails from validation check
   if (!fullName || !email || !address || cart.length === 0) {
     displayMessageBox("Please fill in all fields and ensure your cart is not empty.");
     return;

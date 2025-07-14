@@ -40,6 +40,30 @@ function displayMessageBox(message, onConfirm = null, showCancel = false) {
     }
 }
 
+// Function to map product names to local image paths
+function getProductImagePath(productName) {
+  // Normalize product name for consistent file naming
+  const normalizedName = productName.toLowerCase().replace(/\s/g, '-');
+
+  // Define a mapping for products that should use local images
+  const localImageMap = {
+    'gaming-mouse': '/images/gaming-mouse.png',
+    'backpack': '/images/backpack.png',
+    'smartwatch': '/images/smartwatch.png',
+    'bluetooth-speaker': '/images/bluetooth-speaker.png',
+    'coffee-maker': '/images/coffee-maker.png',
+    'office-chair': '/images/office-chair.png'
+    // Add more mappings here if you add more local images
+  };
+
+  // Check if the product name exists in our local image map
+  if (localImageMap[normalizedName]) {
+    return localImageMap[normalizedName];
+  }
+  // If not found in local map, return null
+  return null;
+}
+
 function loadProductDetails(id) {
   const productContainer = document.getElementById('product-container');
   productContainer.innerHTML = '<div class="flex items-center justify-center min-h-[300px] text-indigo-600 text-lg font-semibold">Loading product details...</div>';
@@ -65,10 +89,14 @@ function loadProductDetails(id) {
 function renderProduct(product) {
   const container = document.getElementById('product-container');
 
+  // Determine the image URL: check for local image first, then fall back to API's imageUrl
+  const localImagePath = getProductImagePath(product.name);
+  const imageUrlToUse = localImagePath || product.imageUrl;
+
   container.innerHTML = `
     <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
         <div class="md:w-1/2 flex-shrink-0">
-            <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-auto object-cover rounded-lg shadow-md border border-gray-200" onerror="this.onerror=null;this.src='https://placehold.co/400x300/CCCCCC/000000?text=No+Image';">
+            <img src="${imageUrlToUse}" alt="${product.name}" class="w-full h-auto object-cover rounded-lg shadow-md border border-gray-200" onerror="this.onerror=null;this.src='https://placehold.co/400x300/CCCCCC/000000?text=No+Image';">
         </div>
         <div class="md:w-1/2 text-center md:text-left">
             <h2 class="text-4xl font-bold text-gray-900 mb-3">${product.name}</h2>
@@ -101,11 +129,12 @@ function renderProduct(product) {
 
   document.getElementById('add-to-cart-btn').addEventListener('click', () => {
     const quantity = parseInt(document.getElementById('quantity').value);
-    addToCart(product, quantity);
+    addToCart(product, quantity, imageUrlToUse); // Pass imageUrlToUse to addToCart
   });
 }
 
-function addToCart(product, quantity) {
+// Modified addToCart to accept the actual image URL being displayed
+function addToCart(product, quantity, displayImageUrl) { // Added displayImageUrl parameter
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
   const existingIndex = cart.findIndex(item => item.id === product.id);
@@ -115,8 +144,8 @@ function addToCart(product, quantity) {
     cart.push({
       id: product.id,
       name: product.name,
-      price: product.price, // Ensure price is stored as a number
-      imageUrl: product.imageUrl,
+      price: product.price,
+      imageUrl: displayImageUrl, // Use the displayImageUrl here
       quantity: quantity
     });
   }
@@ -150,10 +179,14 @@ function loadRelatedProducts(category, excludeId) {
       }
 
       relatedProducts.forEach(product => {
+        // Determine the image URL for related products: check for local image first, then fall back to API's imageUrl
+        const localImagePath = getProductImagePath(product.name);
+        const imageUrlToUse = localImagePath || product.imageUrl;
+
         const card = document.createElement('div');
         card.className = 'product-card'; // This class is styled in styles.css
         card.innerHTML = `
-          <img src="${product.imageUrl}" alt="${product.name}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/CCCCCC/000000?text=No+Image';">
+          <img src="${imageUrlToUse}" alt="${product.name}" onerror="this.onerror=null;this.src='https://placehold.co/300x200/CCCCCC/000000?text=No+Image';">
           <h3 class="text-xl font-semibold text-gray-900">${product.name}</h3>
           <p class="text-gray-700 text-sm mb-2">${product.description}</p>
           <p class="text-lg font-bold text-indigo-600">Price: ₹${product.price.toFixed(2)}</p>
