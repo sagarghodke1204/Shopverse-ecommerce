@@ -1,6 +1,7 @@
 package com.e_commerce.website.e_commerce.website.Controller;
 
 import com.e_commerce.website.e_commerce.website.Entities.Order;
+import com.e_commerce.website.e_commerce.website.Entities.User;
 import com.e_commerce.website.e_commerce.website.Services.OrderService;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,12 +72,23 @@ public class OrderController {
 
     }
 
-    // ✅ NEW: Get orders for a specific user
+    // Get orders for a specific user
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Order>> getOrdersForUser(@PathVariable Long userId) {
         List<Order> orders = orderService.getOrdersByUserId(userId);
         return ResponseEntity.ok(orders);
     }
+
+    // Endpoint to create an order for a specific user (handles POST to /api/orders/user)
+    @PostMapping("/user")
+    public ResponseEntity<Order> createOrderForUser(@RequestBody Order order) {
+
+        Order savedOrder = orderService.saveOrder(order);
+        return ResponseEntity.ok(savedOrder);
+    }
+
+
+
 
 
 }

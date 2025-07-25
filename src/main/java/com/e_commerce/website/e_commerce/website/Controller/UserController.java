@@ -41,13 +41,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    // ✅ Get User By Email (RequestParam, to avoid conflict)
-    @GetMapping("/by-email")
+    // Get User By Email (using a distinct path to avoid ambiguity)
+    // Changed from "/by-email" to "/search" or "/query" for clarity
+    @GetMapping("/search")
     public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
-        User user = userService.getUserByEmail(email);
-        if (user == null) {
-            throw new ResourceNotFoundException("User not found with email: " + email);
-        }
+        User user = userService.getUserByEmail(email); // This method should throw ResourceNotFoundException if user is null
+
         return ResponseEntity.ok(user);
     }
 
@@ -57,7 +56,7 @@ public class UserController {
         User existingUser = userService.getUserById(id);
         existingUser.setEmail(user.getEmail());
         existingUser.setUsername(user.getUsername());
-        existingUser.setPassword(user.getPassword());
+        existingUser.setPassword(user.getPassword()); // Consider hashing passwords
         User updatedUser = userService.saveUser(existingUser);
         return ResponseEntity.ok(updatedUser);
     }
@@ -73,10 +72,12 @@ public class UserController {
     // Login (POST)
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User loginRequest) {
+
         User user = userService.getUserByEmail(loginRequest.getEmail());
         if (user != null && user.getPassword().equals(loginRequest.getPassword())) {
             return ResponseEntity.ok(user);
         } else {
+
             throw new ResourceNotFoundException("Invalid email or password");
         }
     }

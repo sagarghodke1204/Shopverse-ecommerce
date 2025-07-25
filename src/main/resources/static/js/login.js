@@ -21,15 +21,13 @@ function displayMessageBox(message, onConfirm = null, showCancel = false) {
     document.body.appendChild(messageBox);
 
     document.getElementById('msg-box-ok').onclick = () => {
-        messageBox.remove();
-        if (onConfirm) {
-            onConfirm();
-        }
+        document.body.removeChild(messageBox);
+        if (onConfirm) onConfirm();
     };
 
     if (showCancel) {
         document.getElementById('msg-box-cancel').onclick = () => {
-            messageBox.remove();
+            document.body.removeChild(messageBox);
         };
     }
 }
@@ -40,10 +38,10 @@ async function handleLoginSubmit(event) {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
     const errorMessageElement = document.getElementById('error-message');
-    errorMessageElement.innerText = ''; // Clear previous errors
+    errorMessageElement.innerText = '';
 
     try {
-        const response = await fetch('http://localhost:8087/api/users/login', { // Corrected API URL
+        const response = await fetch('http://localhost:8087/api/users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -52,24 +50,35 @@ async function handleLoginSubmit(event) {
         });
 
         if (!response.ok) {
-            const errorData = await response.text(); // Get raw error message
+            const errorData = await response.text();
             throw new Error(errorData || "Invalid email or password. Please try again.");
         }
 
         const user = await response.json();
+        console.log("Login successful. User data from server:", user); // Log user data received
 
-        localStorage.setItem("loggedInUser", JSON.stringify(user));
-        localStorage.setItem("userId", user.id);
-        localStorage.setItem("userEmail", user.email);
-        localStorage.setItem("username", user.username);
+        // Ensure user object and its ID exist before storing
+        if (user && user.id) {
+            // Store the entire user object for comprehensive access later
+            localStorage.setItem("user", JSON.stringify(user));
+            // Store userId separately for convenience and direct access in other scripts
+            localStorage.setItem("userId", user.id);
+            // You can remove these if 'user' object is sufficient, but keeping for consistency with previous iterations
+            localStorage.setItem("userEmail", user.email);
+            localStorage.setItem("username", user.username);
+            console.log("login.js: userId stored in localStorage:", user.id);
 
-        displayMessageBox("Login successful!", () => {
-            window.location.href = "account.html";
-        });
+            displayMessageBox("Login successful!", () => {
+                // Use replace to prevent going back to login page after successful login
+                window.location.replace("account.html");
+            });
+        } else {
+            throw new Error("Login successful, but user ID was not provided by the server.");
+        }
 
     } catch (error) {
         console.error("Login error:", error);
-        errorMessageElement.innerText = error.message; // Display error on the page
-        displayMessageBox("Login failed: " + error.message); // Also show in message box
+        errorMessageElement.innerText = error.message;
+        displayMessageBox("Login failed: " + error.message);
     }
 }

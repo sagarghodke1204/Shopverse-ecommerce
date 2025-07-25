@@ -20,11 +20,12 @@ public class OrderItem {
     @JsonBackReference
     private Order order;
 
+    private Long productId; // This is crucial for fetching product details
+
     private String productName;
     private String imageUrl;
 
-
-
     private int quantity;
     private double price;
+
 }
